@@ -1,17 +1,31 @@
-'use client'
+"use client";
 
-import { ConnectButton } from '@rainbow-me/rainbowkit'
-import Link from 'next/link'
-import { Logo } from './Logo'
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import Link from "next/link";
+import { Wallet } from "lucide-react";
+import Image from "next/image";
+import logo from "../../../public/images/logo.png";
 
 export function Header() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-midnight-950/90 backdrop-blur-md border-b border-midnight-800">
-      <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-12">
-        <div className="flex justify-between items-center h-20">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-[#13061F] py-2 md:py-4">
+      <div className="max-w-7xl mx-auto px-4 md:px-8">
+        <div className="flex justify-between items-center h-12 md:h-16">
           {/* Logo */}
-          <Link href="#home" className="flex items-center hover:opacity-90 transition-opacity duration-200">
-            <Logo size="2xl" />
+          <Link
+            href="#home"
+            className="flex items-center hover:opacity-90 transition-opacity duration-200"
+          >
+            <div className="flex items-center">
+              <Image
+                src={logo}
+                alt="Logo"
+                width={120}
+                height={40}
+                className="h-6 md:h-8 w-auto"
+                priority
+              />
+            </div>
           </Link>
 
           {/* Connect Wallet Button */}
@@ -26,22 +40,24 @@ export function Header() {
                 authenticationStatus,
                 mounted,
               }) => {
-                const ready = mounted && authenticationStatus !== 'loading';
+                // Note: If your app doesn't use authentication, you
+                // can remove all 'authenticationStatus' checks
+                const ready = mounted && authenticationStatus !== "loading";
                 const connected =
                   ready &&
                   account &&
                   chain &&
                   (!authenticationStatus ||
-                    authenticationStatus === 'authenticated');
+                    authenticationStatus === "authenticated");
 
                 return (
                   <div
                     {...(!ready && {
-                      'aria-hidden': true,
-                      'style': {
+                      "aria-hidden": true,
+                      style: {
                         opacity: 0,
-                        pointerEvents: 'none',
-                        userSelect: 'none',
+                        pointerEvents: "none",
+                        userSelect: "none",
                       },
                     })}
                   >
@@ -51,8 +67,9 @@ export function Header() {
                           <button
                             onClick={openConnectModal}
                             type="button"
-                            className="bg-salmon-600 hover:bg-salmon-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-salmon-500 focus:ring-offset-2 focus:ring-offset-midnight-950"
+                            className="bg-[#D73D80] hover:bg-[#D73D80]/80 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200 flex items-center gap-2"
                           >
+                            <Wallet className="w-4 h-4" />
                             Connect Wallet
                           </button>
                         );
@@ -63,7 +80,7 @@ export function Header() {
                           <button
                             onClick={openChainModal}
                             type="button"
-                            className="bg-red-600 hover:bg-red-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-midnight-950"
+                            className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
                           >
                             Wrong network
                           </button>
@@ -74,25 +91,25 @@ export function Header() {
                         <div className="flex items-center gap-3">
                           <button
                             onClick={openChainModal}
+                            className="bg-[#13061F]/80 hover:bg-[#13061F] text-white font-medium py-2 px-3 rounded-lg transition-all duration-200 flex items-center gap-2"
                             type="button"
-                            className="flex items-center gap-2 bg-midnight-800 hover:bg-midnight-700 text-white font-medium py-2 px-3 rounded-lg transition-all duration-200 border border-midnight-600 focus:outline-none focus:ring-2 focus:ring-salmon-500 focus:ring-offset-2 focus:ring-offset-midnight-950"
                           >
                             {chain.hasIcon && (
                               <div
                                 style={{
                                   background: chain.iconBackground,
-                                  width: 12,
-                                  height: 12,
+                                  width: 16,
+                                  height: 16,
                                   borderRadius: 999,
-                                  overflow: 'hidden',
+                                  overflow: "hidden",
                                   marginRight: 4,
                                 }}
                               >
                                 {chain.iconUrl && (
                                   <img
-                                    alt={chain.name ?? 'Chain icon'}
+                                    alt={chain.name ?? "Chain icon"}
                                     src={chain.iconUrl}
-                                    style={{ width: 12, height: 12 }}
+                                    style={{ width: 16, height: 16 }}
                                   />
                                 )}
                               </div>
@@ -103,12 +120,12 @@ export function Header() {
                           <button
                             onClick={openAccountModal}
                             type="button"
-                            className="bg-salmon-600 hover:bg-salmon-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-salmon-500 focus:ring-offset-2 focus:ring-offset-midnight-950"
+                            className="bg-[#D73D80] hover:bg-[#D73D80]/80 text-white font-medium py-2 px-4 rounded-lg transition-all duration-200"
                           >
                             {account.displayName}
                             {account.displayBalance
                               ? ` (${account.displayBalance})`
-                              : ''}
+                              : ""}
                           </button>
                         </div>
                       );
@@ -121,5 +138,5 @@ export function Header() {
         </div>
       </div>
     </header>
-  )
-} 
+  );
+}
