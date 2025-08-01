@@ -7,6 +7,11 @@
     @apply border-midnight-800;
   }
   
+  html, body {
+    height: 100%;
+    overflow-x: hidden;
+  }
+  
   body {
     @apply bg-midnight-950 text-eggshell-50;
     font-feature-settings: "rlig" 1, "calt" 1;
